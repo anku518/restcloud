@@ -10,7 +10,7 @@ import com.pace.akku.restcloud.dao.Student;
 public interface StudentRepo extends JpaRepository<Student, Long> {
 	
 	
-	Student  findByid(long id);
+	/*Student  findByid(long id);
 	
 	List<String> findbyname(String name);
 	
@@ -23,7 +23,7 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
 	
 	void deleteListStudent(List<Student> student);
 	
-	Student updateStudent(Student student);
+	Student updateStudent(Student student);*/
 	
 
 }
