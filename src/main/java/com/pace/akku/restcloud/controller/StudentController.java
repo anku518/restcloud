@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,14 +27,13 @@ public class StudentController {
 	StudentRepo student;
 
 	@GetMapping("/students")
-	public ResponseEntity<List<Student>> getAllTutorials(@RequestParam(required = false) String title) {
+	public ResponseEntity<List<Student>> getAllStudents(@RequestParam(required = false) String title) {
 		try {
 			List<Student> information = new ArrayList<Student>();
 
 			if (title == null)
 				student.findAll().forEach(information::add);
 			else
-			// student.findByTitleContaining(title).forEach(tutorials::add);
 
 			if (information.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -47,7 +47,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/students/{id}")
-	public ResponseEntity<Student> getTutorialById(@PathVariable("id") long id) {
+	public ResponseEntity<Student> getStudentById(@PathVariable("id") long id) {
 		Optional<Student> data = student.findById(id);
 
 		if (data == null) {
@@ -58,15 +58,22 @@ public class StudentController {
 	}
 
 	@PostMapping("/students")
-	public ResponseEntity<Student> createTutorial(@RequestBody Student std) {
+	public ResponseEntity<Student> createStudent(@RequestBody Student std) {
 		try {
-			Student _info = student.saveAndFlush((new Student(std.getStudentid(), std.getDob(),
-					std.getEmailId(), std.getFirstName(), std.getLastName(), std.getPhoneNumber(),
-					std.getSpecialization(), std.getSubject())));
+			Student _info = student
+					.saveAndFlush((new Student(std.getStudentid(), std.getDob(), std.getEmailId(), std.getFirstName(),
+							std.getLastName(), std.getPhoneNumber(), std.getSpecialization(), std.getSubject())));
 			return new ResponseEntity<>(_info, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
+	@GetMapping("/deleteStudents/{id}")
+	public String deleteStudent(@PathVariable(value = "id") long id) {
+
+		// call delete employee method
+		this.student.deleteById(id);
+		return "redirect:/";
+	}
 }
