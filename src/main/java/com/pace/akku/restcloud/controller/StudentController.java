@@ -60,8 +60,8 @@ public class StudentController {
 	public ResponseEntity<Student> createStudent(@RequestBody Student std) {
 		try {
 			Student _info = student
-					.saveAndFlush((new Student(std.getStudentid(), std.getDob(), std.getEmailId(), std.getFirstName(),
-							std.getLastName(), std.getPhoneNumber(), std.getSpecialization(), std.getSubject())));
+					.saveAndFlush((new Student(std.getStudentid(), std.getFirstName(), std.getLastName(), std.getEmailId(), 
+							std.getDob(), std.getSubject(), std.getSpecialization(), std.getPhoneNumber() )));
 			return new ResponseEntity<>(_info, HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
